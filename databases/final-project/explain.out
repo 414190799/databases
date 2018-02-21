@@ -1,0 +1,11 @@
+imdb=> explain SELECT title_id, count(*) FROM title_basics tb WHERE UPPER(primary_title) LIKE 'HIM' AND start_year = 2015 GROUP BY title_id
+imdb-> ;
+                                            QUERY PLAN
+--------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=4546.88..4559.65 rows=1277 width=18)
+   Group Key: title_id
+   ->  Bitmap Heap Scan on title_basics tb  (cost=45.65..4540.49 rows=1277 width=10)
+         Recheck Cond: (start_year = 2015)
+         Filter: (upper((primary_title)::text) ~~ 'HIM'::text)
+         ->  Bitmap Index Scan on speed  (cost=0.00..45.33 rows=1277 width=0)
+               Index Cond: ((upper((primary_title)::text) = 'HIM'::text) AND (start_year = 2015))

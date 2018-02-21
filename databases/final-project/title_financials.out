@@ -1,0 +1,4 @@
+imdb=> select count(*) from title_financials;
+ count
+-------
+ 15987
